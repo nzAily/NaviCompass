@@ -16,11 +16,9 @@
 namespace Xenophilicy\NaviCompass\Task;
 
 use pocketmine\console\ConsoleCommandSender;
-use pocketmine\network\mcpe\protocol\ScriptCustomEventPacket;
 use pocketmine\network\mcpe\protocol\TransferPacket;
 use pocketmine\player\Player;
 use pocketmine\scheduler\Task;
-use pocketmine\utils\Binary;
 use Xenophilicy\NaviCompass\NaviCompass;
 
 /**
@@ -50,8 +48,7 @@ class TeleportTask extends Task {
 
     public function onRun(): void {
         if($this->waterdog) {
-            $pk = new TransferPacket();
-            $pk->address = $this->cmdString;
+            $pk = TransferPacket::create($this->cmdString, 19132, false);
             $this->player->getNetworkSession()->sendDataPacket($pk);
             return;
         }
